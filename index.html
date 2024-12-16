@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheatVault - Forum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1e1e1e;
+            margin: 0;
+            padding: 0;
+            color: #ddd;
+        }
+
+        #header {
+            background-color: #222;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .nav a {
+            color: #ddd;
+            text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 10px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .nav a:hover {
+            background-color: #555;
+        }
+
+        .content {
+            padding: 20px;
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: #2b2b2b;
+            border-radius: 8px;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        .form-container {
+            background: #3a3a3a;
+            padding: 20px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #555;
+            border-radius: 5px;
+            background-color: #444;
+            color: white;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        #login-page, #register-page, #create-post-page, #posts-page {
+            display: none;
+        }
+
+        .post-item {
+            background-color: #333;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .post-item h3 {
+            margin: 0;
+        }
+
+        .post-item p {
+            margin: 5px 0;
+        }
+
+        .post-item .status {
+            font-size: 14px;
+            color: #ffa500;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="header">
+        <h1>CheatVault - Forum</h1>
+        <div class="nav">
+            <a href="javascript:void(0)" onclick="showLoginPage()">Login</a>
+            <a href="javascript:void(0)" onclick="showRegisterPage()">Register</a>
+            <a href="javascript:void(0)" onclick="showCreatePostPage()">Create Post</a>
+            <a href="javascript:void(0)" onclick="showPostsPage()">View Posts</a>
+            <a href="javascript:void(0)" id="logout" onclick="logout()" style="display:none;">Logout</a>
+        </div>
+    </div>
+
+    <div class="content" id="content">
+        <!-- Login Page -->
+        <div class="form-container" id="login-page">
+            <h2>Login</h2>
+            <input type="text" id="login-username" placeholder="Username">
+            <input type="password" id="login-password" placeholder="Password">
+            <button onclick="login()">Login</button>
+            <p id="login-error" class="error"></p>
+        </div>
+
+        <!-- Register Page -->
+        <div class="form-container" id="register-page">
+            <h2>Register</h2>
+            <input type="text" id="register-username" placeholder="Username">
+            <input type="email" id="register-email" placeholder="Email">
+            <input type="password" id="register-password" placeholder="Password">
+            <button onclick="register()">Register</button>
+            <p id="register-error" class="error"></p>
+        </div>
+
+        <!-- Create Post Page -->
+        <div class="form-container" id="create-post-page">
+            <h2>Create a New Post</h2>
+            <input type="text" id="post-title" placeholder="Post Title">
+            <textarea id="post-description" placeholder="Post Description"></textarea>
+            <input type="text" id="post-game" placeholder="Game Name">
+            <input type="url" id="post-download-link" placeholder="Download Link">
+            <button onclick="createPost()">Create Post</button>
+            <p id="create-post-error" class="error"></p>
+        </div>
+
+        <!-- Posts Page -->
+        <div id="posts-page">
+            <h2>Forum Posts</h2>
+            <div id="post-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const apiUrl = "http://localhost:5000";  // Your backend server URL (needs to handle login, registration, etc.)
+
+        // Show Login Page
+        function showLoginPage() {
+            document.getElementById("login-page").style.display = "block";
+            document.getElementById("register-page").style.display = "none";
+            document.getElementById("create-post-page").style.display = "none";
+            document.getElementById("posts-page").style.display = "none";
+        }
+
+        // Show Register Page
+        function showRegisterPage() {
+            document.getElementById("login-page").style.display = "none";
+            document.getElementById("register-page").style.display = "block";
+            document.getElementById("create-post-page").style.display = "none";
+            document.getElementById("posts-page").style.display = "none";
+        }
+
+        // Show Create Post Page
+        function showCreatePostPage() {
+            document.getElementById("login-page").style.display = "none";
+            document.getElementById("register-page").style.display = "none";
+            document.getElementById("create-post-page").style.display = "block";
+            document.getElementById("posts-page").style.display = "none";
+        }
+
+        // Show Posts Page
+        function showPostsPage() {
+            document.getElementById("login-page").style.display = "none";
+            document.getElementById("register-page").style.display = "none";
+            document.getElementById("create-post-page").style.display = "none";
+            document.getElementById("posts-page").style.display = "block";
+            loadPosts();
+        }
+
+        // Load Posts
+        async function loadPosts() {
+            const response = await fetch(`${apiUrl}/posts`);
+            const posts = await response.json();
+            const postList = document.getElementById("post-list");
+            postList.innerHTML = "";
+            posts.forEach(post => {
+                const postDiv = document.createElement("div");
+                postDiv.classList.add("post-item");
+                postDiv.innerHTML = `
+                    <h3>${post.title}</h3>
+                    <p><strong>Game:</strong> ${post.game}</p>
+                    <p><strong>Description:</strong> ${post.description}</p>
+                    <p><strong>Status:</strong> <span class="status">${post.status}</span></p>
+                `;
+                postList.appendChild(postDiv);
+            });
+        }
+
+        // Register User
+        async function register() {
+            const username = document.getElementById("register-username").value;
+            const email = document.getElementById("register-email").value;
+            const password = document.getElementById("register-password").value;
+
+            const response = await fetch(`${apiUrl}/register`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, email, password })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Registration successful!");
+                showLoginPage();
+            } else {
+                document.getElementById("register-error").innerText = result.error || "Registration failed.";
+            }
+        }
+
+        // Login User
+        async function login() {
+            const username = document.getElementById("login-username").value;
+            const password = document.getElementById("login-password").value;
+
+            const response = await fetch(`${apiUrl}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Login successful!");
+                localStorage.setItem("token", result.token);
+                showPostsPage();
+                document.getElementById("logout").style.display = "block";
+            } else {
+                document.getElementById("login-error").innerText = result.error || "Login failed.";
+            }
+        }
+
+        // Create Post
+        async function createPost() {
+            const title = document.getElementById("post-title").value;
+            const description = document.getElementById("post-description").value;
+            const game = document.getElementById("post-game").value;
+            const downloadLink = document.getElementById("post-download-link").value;
+
+            const response = await fetch(`${apiUrl}/createPost`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({ title, description, game, downloadLink })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Post created successfully!");
+                showPostsPage();
+            } else {
+                alert("Failed to create post.");
+            }
+        }
+
+        // Logout
+        function logout() {
+            localStorage.removeItem("token");
+            document.getElementById("logout").style.display = "none";
+            showLoginPage();
+        }
+    </script>
+</body>
+</html>
