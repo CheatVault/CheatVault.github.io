@@ -6,79 +6,75 @@
     <title>CheatVault - Forum</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
+            font-family: "Arial", sans-serif;
+            background-color: #f4f4f4;
+            color: #000;
             margin: 0;
             padding: 0;
-            color: #ddd;
         }
 
         #header {
-            background-color: #222;
+            background-color: #5c5c5c;
             color: white;
-            padding: 15px;
+            padding: 10px;
             text-align: center;
-            border-bottom: 1px solid #333;
+            border-bottom: 2px solid #333;
         }
 
         .nav {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
-
-        .nav a {
-            color: #ddd;
-            text-decoration: none;
-            padding: 10px 20px;
-            margin: 0 10px;
             background-color: #333;
-            border-radius: 5px;
-        }
-
-        .nav a:hover {
-            background-color: #555;
-        }
-
-        .content {
-            padding: 20px;
-            max-width: 1000px;
-            margin: 20px auto;
-            background-color: #2b2b2b;
-            border-radius: 8px;
-        }
-
-        h2 {
+            color: white;
+            padding: 8px;
             text-align: center;
         }
 
+        .nav a {
+            color: white;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 14px;
+        }
+
+        .nav a:hover {
+            text-decoration: underline;
+        }
+
+        .content {
+            width: 900px;
+            margin: 20px auto;
+            background-color: #fff;
+            padding: 15px;
+            border: 1px solid #ccc;
+        }
+
         .form-container {
-            background: #3a3a3a;
-            padding: 20px;
-            margin-bottom: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: #e0e0e0;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin: 0 0 15px;
         }
 
         input, textarea, select {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #555;
-            border-radius: 5px;
-            background-color: #444;
-            color: white;
+            padding: 8px;
+            margin: 5px 0 15px;
+            border: 1px solid #ccc;
+            font-size: 14px;
         }
 
         button {
             background-color: #4CAF50;
             color: white;
             padding: 10px;
-            border: none;
-            border-radius: 5px;
+            border: 1px solid #388E3C;
             cursor: pointer;
             width: 100%;
-            font-size: 16px;
+            font-size: 14px;
         }
 
         button:hover {
@@ -88,6 +84,7 @@
         .error {
             color: red;
             text-align: center;
+            font-size: 12px;
         }
 
         #login-page, #register-page, #create-post-page, #posts-page {
@@ -95,38 +92,46 @@
         }
 
         .post-item {
-            background-color: #333;
-            padding: 15px;
+            background-color: #f9f9f9;
+            padding: 10px;
             margin: 10px 0;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+            font-size: 14px;
         }
 
         .post-item h3 {
-            margin: 0;
-        }
-
-        .post-item p {
-            margin: 5px 0;
+            font-size: 18px;
+            margin-bottom: 10px;
         }
 
         .post-item .status {
-            font-size: 14px;
-            color: #ffa500;
+            font-size: 12px;
+            color: #ff9800;
         }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            margin-top: 20px;
+            font-size: 12px;
+        }
+
     </style>
 </head>
 <body>
 
     <div id="header">
         <h1>CheatVault - Forum</h1>
-        <div class="nav">
-            <a href="javascript:void(0)" onclick="showLoginPage()">Login</a>
-            <a href="javascript:void(0)" onclick="showRegisterPage()">Register</a>
-            <a href="javascript:void(0)" onclick="showCreatePostPage()">Create Post</a>
-            <a href="javascript:void(0)" onclick="showPostsPage()">View Posts</a>
-            <a href="javascript:void(0)" id="logout" onclick="logout()" style="display:none;">Logout</a>
-        </div>
+    </div>
+
+    <div class="nav">
+        <a href="javascript:void(0)" onclick="showLoginPage()">Login</a>
+        <a href="javascript:void(0)" onclick="showRegisterPage()">Register</a>
+        <a href="javascript:void(0)" onclick="showCreatePostPage()">Create Post</a>
+        <a href="javascript:void(0)" onclick="showPostsPage()">View Posts</a>
+        <a href="javascript:void(0)" id="logout" onclick="logout()" style="display:none;">Logout</a>
     </div>
 
     <div class="content" id="content">
@@ -154,7 +159,10 @@
             <h2>Create a New Post</h2>
             <input type="text" id="post-title" placeholder="Post Title">
             <textarea id="post-description" placeholder="Post Description"></textarea>
-            <input type="text" id="post-game" placeholder="Game Name">
+            <select id="post-game">
+                <option value="">Select a Game</option>
+                <!-- Dynamically populate the game options here -->
+            </select>
             <input type="url" id="post-download-link" placeholder="Download Link">
             <button onclick="createPost()">Create Post</button>
             <p id="create-post-error" class="error"></p>
@@ -167,8 +175,51 @@
         </div>
     </div>
 
+    <div class="footer">
+        <p>&copy; 2024 CheatVault. All rights reserved.</p>
+    </div>
+
     <script>
-        const apiUrl = "http://localhost:5000";  // Your backend server URL (needs to handle login, registration, etc.)
+        const apiUrl = "https://your-backend-api.com";  // Replace with your backend server URL
+
+        // List of Games (1000+ games from various platforms)
+        const gameTags = [
+            "Counter-Strike", "Dota 2", "Fortnite", "League of Legends", "Minecraft",
+            "World of Warcraft", "Overwatch", "Apex Legends", "Call of Duty", "PUBG", 
+            "Rocket League", "The Witcher 3", "Fall Guys", "Valorant", "Battlefield 5", 
+            "GTA V", "Red Dead Redemption 2", "Cyberpunk 2077", "Rainbow Six Siege", 
+            "Escape from Tarkov", "Hunt: Showdown", "Rust", "Team Fortress 2", "Dark Souls 3", 
+            "Far Cry 5", "Among Us", "Tom Clancy's The Division", "Dead by Daylight", "Hollow Knight", 
+            "Stardew Valley", "The Elder Scrolls V: Skyrim", "Sea of Thieves", "The Sims 4", 
+            "Civilization VI", "ARK: Survival Evolved", "Cities: Skylines", "Fallout 4", "Minecraft Dungeons", 
+            "The Forest", "No Man's Sky", "FIFA 21", "Madden NFL 21", "Assassin's Creed Valhalla", 
+            "Watch Dogs: Legion", "Hitman 3", "Ghost Recon: Breakpoint", "Destiny 2", "Star Wars Battlefront II", 
+            "Subnautica", "Dead Space 2", "Borderlands 3", "Hunt: Showdown", "The Outer Worlds", 
+            "Watch Dogs 2", "Monster Hunter: World", "Resident Evil Village", "The Last of Us Part II", 
+            "NBA 2K21", "Shadow of the Tomb Raider", "Gran Turismo Sport", "F1 2020", "Mortal Kombat 11",
+            // Add thousands more...
+            "Far Cry New Dawn", "Metro Exodus", "Halo: Master Chief Collection", "Red Dead Online", "Baldur's Gate 3", 
+            "Warframe", "Tom Clancy's Ghost Recon Wildlands", "Bloodborne", "Dead Rising 4", "The Last of Us", 
+            "The Division 2", "Hitman 2", "Fallout 76", "Gears of War 5", "Dishonored 2", "Borderlands 2", 
+            "Rocket League", "Overcooked 2", "Monster Hunter World: Iceborne", "Street Fighter V", "For Honor",
+            "Total War: Three Kingdoms", "Dark Souls Remastered", "Civilization V", "Dragon Age: Inquisition", 
+            "StarCraft II", "The Crew 2", "Farming Simulator 19", "Battlefront II", "World War 3", 
+            "Euro Truck Simulator 2", "BeamNG.drive", "Super Smash Bros. Ultimate", "Fall Guys: Ultimate Knockout", 
+            "Squad", "World of Warships", "Total War: Warhammer II", "Hearts of Iron IV"
+        ];
+
+        // Dynamically populate the Game dropdown
+        function populateGames() {
+            const gameSelect = document.getElementById("post-game");
+            gameTags.forEach(game => {
+                const option = document.createElement("option");
+                option.value = game;
+                option.innerText = game;
+                gameSelect.appendChild(option);
+            });
+        }
+
+        populateGames();
 
         // Show Login Page
         function showLoginPage() {
@@ -222,6 +273,36 @@
             });
         }
 
+        // Create Post
+        async function createPost() {
+            const title = document.getElementById("post-title").value;
+            const description = document.getElementById("post-description").value;
+            const game = document.getElementById("post-game").value;
+            const downloadLink = document.getElementById("post-download-link").value;
+
+            if (!title || !description || !game || !downloadLink) {
+                document.getElementById("create-post-error").innerText = "All fields are required.";
+                return;
+            }
+
+            const response = await fetch(`${apiUrl}/createPost`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${localStorage.getItem("token")}`
+                },
+                body: JSON.stringify({ title, description, game, downloadLink, status: "Pending" })
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+                alert("Post created successfully and is under review.");
+                showPostsPage();
+            } else {
+                alert("Failed to create post.");
+            }
+        }
+
         // Register User
         async function register() {
             const username = document.getElementById("register-username").value;
@@ -265,31 +346,6 @@
             }
         }
 
-        // Create Post
-        async function createPost() {
-            const title = document.getElementById("post-title").value;
-            const description = document.getElementById("post-description").value;
-            const game = document.getElementById("post-game").value;
-            const downloadLink = document.getElementById("post-download-link").value;
-
-            const response = await fetch(`${apiUrl}/createPost`, {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "Authorization": `Bearer ${localStorage.getItem("token")}`
-                },
-                body: JSON.stringify({ title, description, game, downloadLink })
-            });
-
-            const result = await response.json();
-            if (response.ok) {
-                alert("Post created successfully!");
-                showPostsPage();
-            } else {
-                alert("Failed to create post.");
-            }
-        }
-
         // Logout
         function logout() {
             localStorage.removeItem("token");
@@ -297,5 +353,6 @@
             showLoginPage();
         }
     </script>
+
 </body>
 </html>
